@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-4">
+            <i class="bi bi-box-seam text-primary"></i> Inventory Management System
+        </h1>
+        <p class="lead text-muted">Manage your products, locations, and track inventory movements efficiently.</p>
+        <hr>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Products Card -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-box display-1 text-primary"></i>
+                <h5 class="card-title mt-3">Products</h5>
+                <p class="card-text">Manage your product catalog with detailed descriptions.</p>
+                <a href="{{ url_for('products') }}" class="btn btn-primary">
+                    <i class="bi bi-arrow-right"></i> View Products
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Locations Card -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-geo-alt display-1 text-success"></i>
+                <h5 class="card-title mt-3">Locations</h5>
+                <p class="card-text">Manage warehouses and storage locations.</p>
+                <a href="{{ url_for('locations') }}" class="btn btn-success">
+                    <i class="bi bi-arrow-right"></i> View Locations
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Movements Card -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-arrow-left-right display-1 text-info"></i>
+                <h5 class="card-title mt-3">Movements</h5>
+                <p class="card-text">Track product movements between locations.</p>
+                <a href="{{ url_for('movements') }}" class="btn btn-info">
+                    <i class="bi bi-arrow-right"></i> View Movements
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Card -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-bar-chart display-1 text-warning"></i>
+                <h5 class="card-title mt-3">Reports</h5>
+                <p class="card-text">View inventory balance and analytics.</p>
+                <a href="{{ url_for('reports') }}" class="btn btn-warning">
+                    <i class="bi bi-arrow-right"></i> View Reports
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> System Features</h5>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle text-success"></i> Complete CRUD operations for Products</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Complete CRUD operations for Locations</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Complete CRUD operations for Movements</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle text-success"></i> Track incoming and outgoing inventory</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Transfer products between locations</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Real-time inventory balance reports</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

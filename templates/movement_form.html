@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}{% if movement %}Edit{% else %}Add{% endif %} Movement - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2>
+            <i class="bi bi-arrow-left-right"></i> 
+            {% if movement %}Edit Product Movement{% else %}Add New Product Movement{% endif %}
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('movements') }}">Movements</a></li>
+                <li class="breadcrumb-item active">{% if movement %}Edit{% else %}Add{% endif %}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="product_id" class="form-label">Product <span class="text-danger">*</span></label>
+                        <select class="form-select" id="product_id" name="product_id" required>
+                            <option value="">-- Select Product --</option>
+                            {% for product in products %}
+                            <option value="{{ product.product_id }}" 
+                                    {% if movement and movement.product_id == product.product_id %}selected{% endif %}>
+                                {{ product.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="from_location" class="form-label">From Location</label>
+                            <select class="form-select" id="from_location" name="from_location">
+                                <option value="">-- None (Incoming) --</option>
+                                {% for location in locations %}
+                                <option value="{{ location.location_id }}" 
+                                        {% if movement and movement.from_location == location.location_id %}selected{% endif %}>
+                                    {{ location.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Leave empty for incoming stock</div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="to_location" class="form-label">To Location</label>
+                            <select class="form-select" id="to_location" name="to_location">
+                                <option value="">-- None (Outgoing) --</option>
+                                {% for location in locations %}
+                                <option value="{{ location.location_id }}" 
+                                        {% if movement and movement.to_location == location.location_id %}selected{% endif %}>
+                                    {{ location.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Leave empty for outgoing stock</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="qty" class="form-label">Quantity <span class="text-danger">*</span></label>
+                        <input type="number" 
+                               class="form-control" 
+                               id="qty" 
+                               name="qty" 
+                               value="{{ movement.qty if movement else '' }}"
+                               min="1"
+                               required>
+                        <div class="form-text">Enter the quantity to move</div>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <h6><i class="bi bi-exclamation-triangle"></i> Movement Rules:</h6>
+                        <ul class="mb-0">
+                            <li>At least one location (From or To) must be selected</li>
+                            <li>From and To locations cannot be the same</li>
+                            <li><strong>From = None:</strong> Items are moved INTO the To location (incoming stock)</li>
+                            <li><strong>To = None:</strong> Items are moved OUT of the From location (outgoing/sales)</li>
+                            <li><strong>Both selected:</strong> Items are transferred between locations</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('movements') }}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-info">
+                            <i class="bi bi-check-circle"></i> 
+                            {% if movement %}Update{% else %}Save{% endif %} Movement
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-lightbulb"></i> Quick Guide</h5>
+                <hr>
+                <h6>Movement Types:</h6>
+                <ul>
+                    <li><strong>Incoming:</strong> From = None, To = Warehouse</li>
+                    <li><strong>Outgoing:</strong> From = Warehouse, To = None</li>
+                    <li><strong>Transfer:</strong> From = Warehouse A, To = Warehouse B</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
